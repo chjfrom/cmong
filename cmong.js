@@ -10,9 +10,9 @@ var socketio = require('socket.io');
 var cors = require('cors');
 var mysql = require('mysql');
 var conn = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '123456',
+  host     : 'cmongdb.cyae1ptjai7y.ap-northeast-2.rds.amazonaws.com',
+  user     : 'chjfrom',
+  password : '10021009',
   database : 'cmong'
 });
 conn.connect();
@@ -49,19 +49,19 @@ app.get('/type_list',function(req,res){
     if (category == 1){
         typeName = '디자인';
     } else if (category == 2){
-        typeName = 'IT&프로그래밍';       
+        typeName = 'IT&프로그래밍';
     } else if (category == 11){
-        typeName = '로고디자인';            
+        typeName = '로고디자인';
     } else if (category == 12){
         typeName = '명함&인쇄물';
     } else if (category == 13){
-        typeName = '웹&모바일';     
+        typeName = '웹&모바일';
     } else if (category == 21){
-         typeName = '워드프레스';         
+         typeName = '워드프레스';
     } else if (category == 22){
-         typeName = '웹사이트 개발';         
+         typeName = '웹사이트 개발';
     } else if (category == 23){
-         typeName = '웹사이트 유지보수';         
+         typeName = '웹사이트 유지보수';
     }
     if (category == 1 || category == 2){
         var sql = 'select * from cmong_product where de_cate_01 = ?'
@@ -71,11 +71,11 @@ app.get('/type_list',function(req,res){
             } else {
                 var cmong_product = cmong_product;
                 var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
-                conn.query(sql,c_userId,function(err,c_interest,fields){ 
+                conn.query(sql,c_userId,function(err,c_interest,fields){
                     if(err) {
                         console.log(err)
                     } else {
-                        res.render('type_list',{cmong_product:cmong_product,typeName:typeName,category:category,c_user:c_user,c_interest:c_interest}); 
+                        res.render('type_list',{cmong_product:cmong_product,typeName:typeName,category:category,c_user:c_user,c_interest:c_interest});
                     }
                 });
             }
@@ -88,17 +88,17 @@ app.get('/type_list',function(req,res){
             } else {
                 var cmong_product = cmong_product;
                 var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
-                conn.query(sql,c_userId,function(err,c_interest,fields){ 
+                conn.query(sql,c_userId,function(err,c_interest,fields){
                     if(err) {
                         console.log(err)
                     } else {
-                        res.render('type_list',{cmong_product:cmong_product,typeName:typeName,category:category,c_user:c_user,c_interest:c_interest}); 
+                        res.render('type_list',{cmong_product:cmong_product,typeName:typeName,category:category,c_user:c_user,c_interest:c_interest});
                     }
                 });
             }
         });
     }
-    
+
 });
 
 
@@ -113,16 +113,16 @@ app.get('/likepage',function(req,res){
                 console.log(err)
             } else {
                 var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
-                conn.query(sql,c_userId,function(err,c_interest,fields){ 
+                conn.query(sql,c_userId,function(err,c_interest,fields){
                     if (err) {
                         console.log(err)
                     } else {
                         res.render('likepage',{likeList:likeList,c_user:c_user,c_interest:c_interest,type:type});
                     }
-                
+
                 });
-            }   
-        });  
+            }
+        });
     } else if (type == 2){
          var sql = 'select c.c_interest,c.c_idx,c.c_id,c.de_idx,c.c_interestC,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_interest as c right join cmong_product as p on c.de_idx = p.de_idx and c.c_interestC =1 and de_cate_01 = "디자인" where c.c_id = ?'
         conn.query(sql,c_userId,function(err,likeList){
@@ -130,16 +130,16 @@ app.get('/likepage',function(req,res){
                 console.log(err)
             } else {
                 var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
-                conn.query(sql,c_userId,function(err,c_interest,fields){ 
+                conn.query(sql,c_userId,function(err,c_interest,fields){
                     if (err) {
                         console.log(err)
                     } else {
                         res.render('likepage',{likeList:likeList,c_user:c_user,c_interest:c_interest,type:type});
                     }
-                
+
                 });
-            }   
-        });      
+            }
+        });
     } else if (type == 3){
          var sql = 'select c.c_interest,c.c_idx,c.c_id,c.de_idx,c.c_interestC,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_interest as c right join cmong_product as p on c.de_idx = p.de_idx and c.c_interestC =1 and de_cate_01 = "it & 프로그래밍" where c.c_id = ?'
         conn.query(sql,c_userId,function(err,likeList){
@@ -147,16 +147,16 @@ app.get('/likepage',function(req,res){
                 console.log(err)
             } else {
                 var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
-                conn.query(sql,c_userId,function(err,c_interest,fields){ 
+                conn.query(sql,c_userId,function(err,c_interest,fields){
                     if (err) {
                         console.log(err)
                     } else {
                         res.render('likepage',{likeList:likeList,c_user:c_user,c_interest:c_interest,type:type});
                     }
-                
+
                 });
-            }   
-        });       
+            }
+        });
     } else {
         var sql = 'select c.c_interest,c.c_idx,c.c_id,c.de_idx,c.c_interestC,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_interest as c right join cmong_product as p on c.de_idx = p.de_idx and c.c_interestC =1 where c.c_id = ?'
         conn.query(sql,c_userId,function(err,likeList){
@@ -164,15 +164,15 @@ app.get('/likepage',function(req,res){
                 console.log(err)
             } else {
                 var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
-                conn.query(sql,c_userId,function(err,c_interest,fields){ 
+                conn.query(sql,c_userId,function(err,c_interest,fields){
                     if (err) {
                         console.log(err)
                     } else {
                         res.render('likepage',{likeList:likeList,c_user:c_user,c_interest:c_interest,type:type});
                     }
-                
+
                 });
-            }   
+            }
         });
     }
 });
@@ -191,7 +191,7 @@ app.get('/chargepage',function(req,res){
                 res.render('chargepage',{c_user:req.session.c_user})
             })
         }
-    });                  
+    });
 });
 app.get('/charDb',function(req,res){
     var c_idx = req.query.c_idx;
@@ -203,7 +203,7 @@ app.get('/charDb',function(req,res){
         } else {
             var c_user1 = c_user1[0];
             var dbCash = parseInt(c_user1.c_cash);
-            var finalDbCash = chargeMoney + dbCash; 
+            var finalDbCash = chargeMoney + dbCash;
             var sql = 'update c_user set c_cash = ? where c_idx =?'
             conn.query(sql,[finalDbCash,c_idx],function(err,cash){
                 if (err){
@@ -212,19 +212,19 @@ app.get('/charDb',function(req,res){
                     var sql = 'select * from c_user where c_idx = ?';
                     conn.query(sql,c_idx,function(err,c_user,fields){
                     if (err){
-                        console.log(err)    
-                    } else { 
+                        console.log(err)
+                    } else {
                         var c_user = c_user[0];
                         req.session.c_user = c_user;
                         req.session.save(function(){
                             res.render('chargepage',{c_user:req.session.c_user})
-                        })  
-                    } 
+                        })
+                    }
                     })
                 }
             })
-        }  
-    }) 
+        }
+    })
 });
 
 app.get('/userpage',function(req,res){
@@ -237,8 +237,8 @@ app.get('/userpage',function(req,res){
         } else {
             var userBuy = userBuy;
             res.render('userpage',{c_user:c_user,userBuy:userBuy});
-        }  
-    })   
+        }
+    })
 })
 app.get('/sellerpage',function(req,res){
     var c_user =  req.session.c_user;
@@ -251,8 +251,8 @@ app.get('/sellerpage',function(req,res){
         } else {
             var userBuy = userBuy;
             res.render('sellerpage',{c_user:c_user,userSell:userSell});
-        }  
-    })   
+        }
+    })
 })
 app.get('/type_list',function(req,res){
     res.render('type_list');
@@ -279,11 +279,11 @@ app.get('/buyForm',function(req,res){
                  var sql = 'select * from cmong_product where de_idx =?'
                  conn.query(sql,d,function(err,d,fields){
                      var resultd = d[0];
-                     res.render('buyForm',{resultd:resultd,resultc:resultc,count:count,c_user:req.session.c_user});   
+                     res.render('buyForm',{resultd:resultd,resultc:resultc,count:count,c_user:req.session.c_user});
                 })
-            } 
+            }
         }
-    }) 
+    })
 })
 
 app.get('/payment',function(req,res){
@@ -294,9 +294,9 @@ app.get('/payment',function(req,res){
     var SavingM = parseInt(req.query.SavingM);
     var c = req.query.c;
     var d = req.query.d;
-    var c_userOrigin =  req.session.c_user;   
-    var c_user =  req.session.c_user.c_idx;   
-    var c_userId =  req.session.c_user.c_id;   
+    var c_userOrigin =  req.session.c_user;
+    var c_user =  req.session.c_user.c_idx;
+    var c_userId =  req.session.c_user.c_id;
     var countM = req.query.countM;
     var c_cashM = cashM - finalMoney;
     var c_savingM = (SavingM - cashSaving) + liveSavingM;
@@ -309,7 +309,7 @@ app.get('/payment',function(req,res){
             var sql = 'select * from c_user where c_idx =?'
             conn.query(sql,c,function(err,pamentUser,fields){
                 if (err){
-                   console.log('결제오류 de테이블 검색')  
+                   console.log('결제오류 de테이블 검색')
                 } else {
                     var pamentUser = pamentUser[0];
                     var sellerM =parseInt(pamentUser.c_cash);
@@ -319,7 +319,7 @@ app.get('/payment',function(req,res){
                     var sql = 'update c_user set c_cash = ? where c_idx = ?'
                     conn.query(sql,[sellerTotalm,c],function(err,c_cash,fields){
                         if (err){
-                            console.log('결제오류 de테이블 검색');  
+                            console.log('결제오류 de테이블 검색');
                         } else {
                             var sql = 'select * from cmong_product where de_idx = ?'
                             conn.query(sql,d,function(err,cmong_product,fields){
@@ -341,12 +341,12 @@ app.get('/payment',function(req,res){
                                                 if (err) {
                                                     console.log(err);
                                                     res.status(500).send('No Math cmong_product');
-                                                } else { 
+                                                } else {
                                                     var cmong_product = cmong_product;
                                                     var sql = 'select * from c_user where c_idx = ?';
                                                     conn.query(sql,c_user,function(err,c_user,fields){
                                                         if (err){
-                                                            console.log(err)    
+                                                            console.log(err)
                                                         } else {
                                                             var c_user = c_user[0];
                                                             var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
@@ -354,30 +354,30 @@ app.get('/payment',function(req,res){
                                                                 var c_interest = c_interest;
                                                                 req.session.c_user = c_user;
                                                                 req.session.save(function(){
-                                                                    res.render('index',{c_user:req.session.c_user,cmong_product:cmong_product,c_interest:c_interest}) 
-                                                                }) 
-                                                            })      
-                                                             
-                                                        } 
+                                                                    res.render('index',{c_user:req.session.c_user,cmong_product:cmong_product,c_interest:c_interest})
+                                                                })
+                                                            })
+
+                                                        }
                                                   })
                                                 }
                                             });
                                         }
-                                    }) 
-                                } 
-                            }) 
-                        }  
+                                    })
+                                }
+                            })
+                        }
                     })
                 }
             })
         }
-    })   
+    })
 });
 
 app.get('/product_list_view',function(req,res){
     var c = req.query.c;
     var d = req.query.d;
-    var c_user =  req.session.c_user;                 
+    var c_user =  req.session.c_user;
     console.log(c_user)
     var sql = 'select * from c_user where c_idx =?'
     conn.query(sql,c,function(err,c,fields){
@@ -393,11 +393,11 @@ app.get('/product_list_view',function(req,res){
                  var sql = 'select * from cmong_product where de_idx =?'
                  conn.query(sql,d,function(err,d,fields){
                      var resultd = d[0];
-                     res.render('product_list_view',{resultd:resultd,resultc:resultc,c_user:c_user});   
+                     res.render('product_list_view',{resultd:resultd,resultc:resultc,c_user:c_user});
                 })
-            } 
+            }
         }
-    })   
+    })
 })
 
 app.post('/ListCheckT',function(req,res){
@@ -409,10 +409,10 @@ app.post('/ListCheckT',function(req,res){
         conn.query(sql,[listText,arr[0]],function(err,cate,fields){
             if (err) {
                 console.log(err)
-            } else { 
+            } else {
                 res.send(cate);
             }
-        })  
+        })
     } else if (arrLenth == 2){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_02 = ? where c.c_grade = ? OR c.c_grade = ?;'
         conn.query(sql,[listText,arr[0],arr[1]],function(err,cate,fields){
@@ -421,7 +421,7 @@ app.post('/ListCheckT',function(req,res){
             } else {
                 res.send(cate);
             }
-        })  
+        })
     } else if (arrLenth == 3){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_02 = ? where c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ?;'
         conn.query(sql,[listText,arr[0],arr[1],arr[2]],function(err,cate,fields){
@@ -430,7 +430,7 @@ app.post('/ListCheckT',function(req,res){
             } else {
                 res.send(cate);
             }
-        })  
+        })
     }  else if (arrLenth == 4){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_02 = ? where c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ?;'
         conn.query(sql,[listText,arr[0],arr[1],arr[2],arr[3]],function(err,cate,fields){
@@ -439,7 +439,7 @@ app.post('/ListCheckT',function(req,res){
             } else {
                 res.send(cate);
             }
-        })  
+        })
     } else if (arrLenth == 5){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_02 = ? where c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ?;'
         conn.query(sql,[listText,arr[0],arr[1],arr[2],arr[3],arr[4]],function(err,cate,fields){
@@ -448,7 +448,7 @@ app.post('/ListCheckT',function(req,res){
             } else {
                 res.send(cate);
             }
-        })  
+        })
     } else if (arrLenth == 6){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_02 = ? where c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ? OR c.c_grade = ?;'
         conn.query(sql,[listText,arr[0],arr[1],arr[2],arr[3],arr[4],arr[5]],function(err,cate,fields){
@@ -457,9 +457,9 @@ app.post('/ListCheckT',function(req,res){
             } else {
                 res.send(cate);
             }
-        })  
+        })
     } else if (arrLenth == null){
-         console.log("fsdfsdfdsfds")  
+         console.log("fsdfsdfdsfds")
     }
 })
 app.post('/typeList',function(req,res){
@@ -473,14 +473,14 @@ app.post('/typeList',function(req,res){
         } else {
              res.send(cate);
         }
-    })  
+    })
 })
 
 app.post('/typeListCheck',function(req,res){
     var arr = req.body.arr;
     var cate01 = req.body.cate01;
      var arrLenth = arr.length;
-    
+
     if (arrLenth == 1){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_01 = ? where c.c_grade = ?;'
         conn.query(sql,[cate01,arr[0]],function(err,check,fields){
@@ -489,7 +489,7 @@ app.post('/typeListCheck',function(req,res){
             } else {
                 res.send(check);
             }
-        })    
+        })
     } else if (arrLenth == 2){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_01 = ? where c.c_grade = ? or c.c_grade = ?;'
         conn.query(sql,[cate01,arr[0],arr[1]],function(err,check,fields){
@@ -498,7 +498,7 @@ app.post('/typeListCheck',function(req,res){
             } else {
                 res.send(check);
             }
-        })    
+        })
     } else if (arrLenth == 3){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_01 = ? where c.c_grade = ? or c.c_grade = ? or c.c_grade = ?;'
         conn.query(sql,[cate01,arr[0],arr[1],arr[2]],function(err,check,fields){
@@ -507,7 +507,7 @@ app.post('/typeListCheck',function(req,res){
             } else {
                 res.send(check);
             }
-        })    
+        })
     } else if (arrLenth == 4){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_01 = ? where c.c_grade = ? or c.c_grade = ? or c.c_grade = ? or c.c_grade = ?;'
         conn.query(sql,[cate01,arr[0],arr[1],arr[2],arr[3]],function(err,check,fields){
@@ -516,7 +516,7 @@ app.post('/typeListCheck',function(req,res){
             } else {
                 res.send(check);
             }
-        })    
+        })
     } else if (arrLenth == 5){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_01 = ? where c.c_grade = ? or c.c_grade = ? or c.c_grade = ? or c.c_grade = ? or c.c_grade = ?;'
         conn.query(sql,[cate01,arr[0],arr[1],arr[2],arr[3],arr[4]],function(err,check,fields){
@@ -525,7 +525,7 @@ app.post('/typeListCheck',function(req,res){
             } else {
                 res.send(check);
             }
-        })  
+        })
     } else if (arrLenth == 6){
         var sql = 'select c.c_grade,p.de_idx,p.c_idx,p.c_id,p.de_tit,p.de_cate_01,p.de_cate_02,p.de_type_01,p.de_type_02,p.de_type_03,p.de_type_04,p.de_subtit,p.de_subtex,p.de_pay,p.de_step_01,p.de_step_02,p.de_step_03,p.de_step_04,p.de_detail_tex,p.de_as,p.de_pro_intro,p.de_interest,p.de_date datetime,p.de_main_img,p.de_sub_img01,p.de_sub_img02,p.de_sub_img03 from c_user as c right join cmong_product as p on c.c_idx = p.c_idx and p.de_cate_01 = ? where c.c_grade = ? or c.c_grade = ? or c.c_grade = ? or c.c_grade = ? or c.c_grade = ? or c.c_grade = ?;'
         conn.query(sql,[cate01,arr[0],arr[1],arr[2],arr[3],arr[4],arr[5]],function(err,check,fields){
@@ -534,7 +534,7 @@ app.post('/typeListCheck',function(req,res){
             } else {
                 res.send(check);
             }
-        })    
+        })
     }
 })
 app.get('/mypage',function(req,res){
@@ -542,12 +542,12 @@ app.get('/mypage',function(req,res){
     console.log(c_id);
     console.log("aaaaaaa")
     var sql = 'select * from c_user where c_id = ?';
-    conn.query(sql,c_id,function(err,c_user,fields){ 
+    conn.query(sql,c_id,function(err,c_user,fields){
         var c_user = c_user[0]
         req.session.save(function(){
             res.render('mypage',{c_user:c_user})
         });
-    });   
+    });
 });
 app.post('/mypage',function(req,res){
     var c_id = req.body.c_id;
@@ -558,7 +558,7 @@ app.post('/mypage',function(req,res){
     var callTime2 = req.body.callTime2;
     var modifyImg = req.body.modifyImg;
     var callTime = callTime1 + '~' + callTime2;
-    
+
     console.log(callTime)
     var sql = 'update c_user set c_name=?, c_phon=?,c_mail=?,c_img=?,c_time=? where c_id = ?;'
     conn.query(sql,[c_name,c_phon,c_mail,modifyImg,callTime,c_id],function(err,result){
@@ -566,7 +566,7 @@ app.post('/mypage',function(req,res){
             console.log(err)
         } else {
             var sql = 'select * from c_interest where c_id = ? and c_interestC = 1';
-            conn.query(sql,c_id,function(err,c_interest,fields){ 
+            conn.query(sql,c_id,function(err,c_interest,fields){
                 if (err){
                     console.log(err)
                 } else {
@@ -576,7 +576,7 @@ app.post('/mypage',function(req,res){
                             console.log(err)
                         } else {
                             var sql = 'select * from c_user where c_id = ?';
-                            conn.query(sql,c_id,function(err,c_user,fields){ 
+                            conn.query(sql,c_id,function(err,c_user,fields){
                                 if (err){
                                     console.log(err)
                                 } else {
@@ -585,14 +585,14 @@ app.post('/mypage',function(req,res){
                                     req.session.save(function(){
                                         res.render('index',{c_user: req.session.c_user,cmong_product:cmong_product,c_interest:c_interest})
                                     })
-                                }  
+                                }
                             })
                         }
                     })
                 }
-            }) 
+            })
         }
-    }); 
+    });
 })
 
 
@@ -606,21 +606,21 @@ app.post('/loginIdc',function(req,res){
         } else {
             res.send(result);
         }
-    })  
+    })
 })
 
-app.post('/interest',function(req,res){ 
+app.post('/interest',function(req,res){
     var c_idx = req.body.c_idx;
-    var c_id = req.body.c_id; 
-    var d_idx = req.body.d_idx; 
-    
+    var c_id = req.body.c_id;
+    var d_idx = req.body.d_idx;
+
     var sql = 'select * from c_interest where c_idx = ? and de_idx =?'
-    conn.query(sql,[c_idx,d_idx],function(err,result){ 
+    conn.query(sql,[c_idx,d_idx],function(err,result){
         if (err){
             console.log(err);
         } else {
             var count = Object.keys(result).length;
-            if (count == 1){ 
+            if (count == 1){
                 var result = result[0];
                 var c_interest = result.c_interest;
                 var c_interestC = result.c_interestC;
@@ -631,25 +631,7 @@ app.post('/interest',function(req,res){
                             console.log(err)
                         } else {
                             var sql = 'select * from c_interest where c_idx = ? and de_idx =?'
-                            conn.query(sql,[c_idx,d_idx],function(err,booleanResult){ 
-                                var booleanResult = booleanResult[0];
-                                var number = booleanResult.c_interestC;
-                                if(err){
-                                   console.log(err)
-                                } else {
-                                    res.send(number)
-                                }
-                            }) 
-                        }
-                    })  
-                } else {
-                    var sql = 'update c_interest set c_interestC = 1 where c_interest = ?'
-                    conn.query(sql,c_interest,function(err,result2){
-                        if(err) {
-                            console.log(err)
-                        } else {
-                            var sql = 'select * from c_interest where c_idx = ? and de_idx =?'
-                            conn.query(sql,[c_idx,d_idx],function(err,booleanResult){ 
+                            conn.query(sql,[c_idx,d_idx],function(err,booleanResult){
                                 var booleanResult = booleanResult[0];
                                 var number = booleanResult.c_interestC;
                                 if(err){
@@ -659,7 +641,25 @@ app.post('/interest',function(req,res){
                                 }
                             })
                         }
-                    }) 
+                    })
+                } else {
+                    var sql = 'update c_interest set c_interestC = 1 where c_interest = ?'
+                    conn.query(sql,c_interest,function(err,result2){
+                        if(err) {
+                            console.log(err)
+                        } else {
+                            var sql = 'select * from c_interest where c_idx = ? and de_idx =?'
+                            conn.query(sql,[c_idx,d_idx],function(err,booleanResult){
+                                var booleanResult = booleanResult[0];
+                                var number = booleanResult.c_interestC;
+                                if(err){
+                                   console.log(err)
+                                } else {
+                                    res.send(number)
+                                }
+                            })
+                        }
+                    })
                 }
             } else {
                 var sql = 'INSERT INTO c_interest (c_idx,c_id,de_idx,c_interestC) VALUES(?,?,?,1);'
@@ -669,10 +669,10 @@ app.post('/interest',function(req,res){
                     } else {
                         res.send(result);
                     }
-                })   
+                })
             }
-        }   
-    })  
+        }
+    })
 })
 
 app.get('/loginForm',function(req,res){
@@ -727,18 +727,18 @@ app.post('/upload', function(req, res){
     var imgSub1 = req.body.imgSub1;
     var imgSub2 = req.body.imgSub2;
     var imgSub3 = req.body.imgSub3;
-    
+
     if (de_step_01 == null){
         de_step_01 = '원본파일 제공안함';
     }
-    
+
     console.log(de_cate_01)
     console.log(de_cate_02)
     console.log(de_type_01)
     console.log(de_type_02)
     console.log(de_type_03)
     console.log(de_type_04)
-    
+
     var sql = 'INSERT INTO cmong_product (c_idx,c_id,de_tit,de_cate_01,de_cate_02,de_type_01,de_type_02,de_type_03,de_type_04,de_subtit,de_subtex,de_pay,de_step_01,de_step_02,de_step_03,de_step_04,de_detail_tex,de_as,de_pro_intro,de_interest,de_date,de_main_img,de_sub_img01,de_sub_img02,de_sub_img03,de_payment)VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,CURRENT_TIMESTAMP,?,?,?,?,0);'
     conn.query(sql,[c_idx,c_id,de_tit,de_cate_01,de_cate_02,de_type_01,de_type_02,de_type_03,de_type_04,de_subtit,de_subtex,de_pay,de_step_01,de_step_02,de_step_03,de_step_04,de_detail_tex,de_as,de_pro_intro,imgMain,imgSub1,imgSub2,imgSub3],function(err,result){
         if (err) {
@@ -755,7 +755,7 @@ app.get('/login',function(req,res){
 app.post('/login',function(req,res){
     var id = req.body.u_id;
     var pw = req.body.u_pw;
-    
+
     var sql = 'select * from c_user where c_id = ?';
     conn.query(sql,[id],function(err,c_user,fields){
         if (err) {
@@ -784,21 +784,21 @@ app.post('/login',function(req,res){
                                   })
                                 }
                             });
-                        } 
+                        }
                     });
                 } else {
                   res.render('login',{c_user:null});
                 }
               });
-            } 
+            }
         }
     })
 })
 app.get('/logout',function(req,res){
     req.session.destroy(function(){
         req.session;
-    }); 
-    res.render('login'); 
+    });
+    res.render('login');
 })
 app.get('/cmong',function(req,res){
     var c_user =  req.session.c_user;
@@ -821,19 +821,19 @@ app.get('/cmong',function(req,res){
                   })
                 }
             });
-        } 
-    });   
+        }
+    });
 });
 
-app.post('/user_insert',function(req,res){ 
-    hasher({password:req.body.u_pw}, function(err, pass, salt, hash){ 
+app.post('/user_insert',function(req,res){
+    hasher({password:req.body.u_pw}, function(err, pass, salt, hash){
         var id = req.body.u_id;
         var name = req.body.u_name;
         var pw = hash;
         var salt = salt;
         var phon = req.body.u_phon;
         var email = req.body.u_email;
-        
+
         var sql = 'INSERT INTO c_user (c_id,c_pass,c_name,c_phon,c_mail,c_grade,c_life,c_img,c_cash,c_saving,c_salt,c_date)  VALUES (?,?,?,?,?,"0","1","user_first_img.jpg",0,0,?,CURRENT_TIMESTAMP);'
         conn.query(sql,[id,pw,name,phon,email,salt],function(err,result){
             if (err) {
@@ -876,20 +876,20 @@ io.sockets.on('connection',function(socket){
     console.log('connection info -->' + JSON.stringify(socket.request.connection._peername));
     socket.remoteAddress = socket.request.connection._peername.address;
 	socket.remotePort = socket.request.connection._peername.port;
-    
+
     socket.on('login',function(input){
         console.log('login 받음 ->' +JSON.stringify(input));
-        
+
         login_ids[input.id] = socket.id;
         socket.login_id = input.id;
-        
+
         sendResponse(socket,'login',200,'OK');
-        
+
     });
-    
+
     socket.on('message',function(message){
         console.log('message 받음 -> ' + JSON.stringify(message));
-        
+
         if(message.recepient == 'ALL') {
             console.log('모든 클라이언트에세 메세지 전송');
             io.sockets.emit('message',message);
@@ -901,9 +901,9 @@ io.sockets.on('connection',function(socket){
                 sendResponse(socket,'message',400,'상대방 ID를 찾을수 없습니다.')
             }
         }
-        
+
     })
-    
+
 })
 
 // 응답 메시지 전송 메소드
@@ -915,7 +915,3 @@ function sendResponse(socket, command, code, message) {
     } ;
 	socket.emit('response', output);
 }
-
-
-
-
