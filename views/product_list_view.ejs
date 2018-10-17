@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</head>
+<body>
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1>
+                                   <a href="cmong"><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></a>
+                                </h1>
+							</div>
+							<div class="sch">
+								<form>
+									<input type="text" name="" placeholder="검색어를 입력해 주세요">
+									<p><img src="../images/common/search_ico.png" alt="크몽메인검색아이콘"></p>
+								</form>
+							</div>
+						</li>
+						<li>
+                            <div class="utill">
+                                <% if(c_user){ %>
+                                 <!-- 로그인 성공시 -->
+                                    <!--<div class="mypg"><img src="../images/common/alram.png" alt=""></div>-->
+                                    <div class="boxing">
+                                        <div class="userImg"><img src="<%= c_user.c_id %>/<%= c_user.c_img %>" alt=""></div>
+                                        <div class="userId"><%= c_user.c_id %></div>
+                                        <span class="ico"></span>
+                                        <div class="utillConts">	
+                                            <ul>
+                                                <li><a href="userpage">구매목록</a></li>
+                                                <li><a href="productStep">판매</a></li>
+                                                <li><a href="sellerpage">판매목록</a></li>
+                                                <li><a href="likepage">찜목록</a></li>
+                                                <li><a href="mypage">나의정보</a></li>
+                                                <li><a href="logout">로그아웃</a></li>
+                                            </ul>
+                                        </div>
+                                        <img class="toparrow" src="../images/common/main_toparrow.png" alt="">
+                                    </div>
+                                 <% } else { %>
+                                    <!-- 비회원 -->
+                                    <div class="login">
+                                       <h2><a href='login'>로그인</a></h2>
+                                    </div>
+                                    <div class="aplyLogin">
+                                        <h2><a href='loginForm'>무료회원 가입</a></h2>
+                                    </div> 
+                                 <% } %>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</div>
+			<div class="utileHead addType">
+				<div>
+					<nav class="navi">
+						<ul class="firstUi">
+                            <li>
+                                <a href="type_list?category=1"><h2>디자인</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=11">로고 디자인</a></li>
+                                        <li><a href="type_list?category=12">명함&인쇄물</a></li>
+                                        <li><a href="type_list?category=13">웹&모바일</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="type_list?category=2"><h2>IT & 프로그래밍</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=21">워드프레스</a></li>
+                                        <li><a href="type_list?category=22">웹사이트 개발</a></li>
+                                        <li><a href="type_list?category=23">웹사이트 유지보수</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=""><h2>컨텐츠 제작</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>마케팅</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>번역 & 통역</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>문서작성</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                        </ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<section id="infoConts">
+			<div class="inerContens">
+				<div class="productDView">
+					<div class="productInfo">
+						<h3><span><%= resultd.de_cate_01 %></span>  >  <span><%= resultd.de_cate_02 %></span></h3>
+						<div class="topInfo">
+							<div class="imgView">
+								<img src="<%= resultd.c_id %>/<%= resultd.de_main_img %>" alt="">
+								<h4><%= resultd.de_tit %></h4>
+								<div class="payResult">
+									<p><img src="../images/common/heart.jpg" alt=""></p>
+									<p>\ <span class="totalMoney"><%= resultd.de_pay %></span></p>
+								</div>
+							</div>
+						</div>
+						<div class="payInfo">
+							<h4>가격정보</h4>
+							<div class="payBuyInfo">
+								<div class="lyaout">
+									<div class="buyBox">
+										<h5><%= resultd.de_subtit %></h5>
+										<p><%= resultd.de_subtex %></p>
+										<ul class="svcList">
+                                            <% if (resultd.de_step_01 == 'on') { %>
+                                                <li>원본파일 제공</li>
+                                            <% } %>
+                                            <% if (resultd) { %>
+                                                <li>페이지 수 : <%= resultd.de_step_02 %> 페이지</li>
+                                            <% } %>
+										</ul>
+										<div class="svcDetail">
+											<ul>
+												<li>작업일 : <%= resultd.de_step_03 %>일</li>
+												<li>수정 횟수 : <%= resultd.de_step_04 %> 회</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="lyaout">
+									<div class="countMoney">
+										<p class="minusM"><img src="../images/sub/ico_minus.jpg" alt=""></p>
+										<p class="countM">1</p>
+										<p class="plusM"><img src="../images/sub/ico_plus.jpg" alt=""></p>
+										<p>₩ <span class="changeM"><%= resultd.de_pay %></span></p>
+									</div>
+								</div>
+							</div>
+                            <% if (resultd.c_id == c_user.c_id) { %>
+                            <% } else { %>
+                                <div class="btnMoney">
+                                    <a href="buyForm?c=<%= resultc.c_idx %>&d=<%= resultd.de_idx %>&count=1" class="buyBtn realCdount">
+                                        <span>구매하기(\ <span class="changeM"><%= resultd.de_pay %></span>/VAT포함)</span>
+                                    </a>
+                                </div>
+                            <% }  %>			
+							<h4>서비스 설명</h4>
+							<div class="svcTex">
+								<div class="sellerSvcTex"><%= resultd.de_detail_tex %></div>
+								<div class="imgContent">
+                                    <% if (resultd.de_sub_img01) { %>
+                                       <img src="<%= resultd.c_id %>/<%= resultd.de_sub_img01 %>" alt="">
+                                    <% } %>
+									 <% if (resultd.de_sub_img02) { %>
+                                       <img src="<%= resultd.c_id %>/<%= resultd.de_sub_img02 %>" alt="">
+                                    <% } %>
+									 <% if (resultd.de_sub_img03) { %>
+                                       <img src="<%= resultd.c_id %>/<%= resultd.de_sub_img03 %>" alt="">
+                                    <% } %>
+								</div>
+							</div>
+						</div>
+						<h4>A/S 및 환불</h4>
+						<div class="as">
+							<p><%= resultd.de_as %></p>
+						</div>
+					</div>
+					<div class="serviceInfo">
+						<div class="serviceTit">
+							<h3><%= resultd.de_cate_01 %></h3>
+							<p><%= resultd.de_cate_02 %></p>
+							<ul class="svcList">
+								 <% if (resultd.de_step_01 == 'on') { %>
+                                    <li>원본파일 제공</li>
+                                <% } %>
+								<% if (resultd) { %>
+                                    <li>페이지 수 : <%= resultd.de_step_02 %> 페이지</li>
+                                <% } %>
+							</ul>
+							<div class="svcDetail">
+								<ul>
+									<li>작업일 : <%= resultd.de_step_03 %>일</li>
+                                    <li>수정 횟수 : <%= resultd.de_step_04 %> 회</li>
+								</ul>
+							</div>
+                            <% if (resultd.c_id == c_user.c_id) { %>
+                            <% } else { %>
+                                <p>
+                                    <a href="buyForm?c=<%= resultc.c_idx %>&d=<%= resultd.de_idx %>&count=1" class="buyBtn realCdount">
+                                        <span>구매하기(\ <span class="changeM"><%= resultd.de_pay %></span>/VAT포함)</span>
+                                    </a>
+                                </p>
+                            <% } %>	
+						</div>
+						<div class="sellerInfo">
+							<div class="CompanyImg">
+                                <img src="<%= resultc.c_id %>/<%= resultc.c_img %>" alt="">
+								<p class="grade"><img src="../images/common/kmong_grade_PRO.png" alt=""></p>
+							</div>
+							<h4 class="seller"><%= resultc.c_id %></h4>
+							<p class="line"></p>
+							<p class="sellerOpen">결제전 비공개</p>
+							<p class="callOpen">
+                                <% if(resultc.c_time == null) { %>
+                                    연락가능시간 : 미입력
+                                <% } else { %>
+                                연락가능시간 : <%= resultc.c_time %>
+                                 <% } %>
+                            </p>
+							<p class="proCall"><img src="../images/common/procallbtn.jpg" alt="전문가에게 문의"></p>
+							<div class="selerCount">
+								<ul>
+									<li>
+										<div class="count">8,946건</div>
+										<p class="tit">총작업개수</p>
+									</li>
+									<li>
+										<div class="count">97%</div>
+										<p class="tit">만족도</p>
+									</li>
+									<li>
+										<div class="count">1시간 내외</div>
+										<p class="tit">평균응답시간</p>
+									</li>
+									<li>
+										<div class="count">개인회원</div>
+										<p class="tit">회원구분</p>
+									</li>
+								</ul>
+							</div>
+							<div class="selIntroduce">
+								<h3>전문가 소개</h3>
+								<div>
+									<%= resultd.de_pro_intro %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="infoLink">
+				<div class="linkList">
+					<ul>
+						<li>크몽팀</li>
+						<li>|</li>
+						<li>서비스소개</li>
+						<li>|</li>
+						<li>인재채용</li>
+						<li>|</li>
+						<li>이용약관</li>
+						<li>|</li>
+						<li>개인정보취급방침</li>
+						<li>|</li>
+						<li>FAQ</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="footImg">
+			<img src="../images/common/footer.jpg" alt="">
+		</section>
+		<!-- <section id="notiConts">
+			<div>
+				<div class="notiFirst">
+					
+				</div>
+				<div class="notiLast">
+					
+				</div>
+			</div>
+			<div class="notiIg">sfsdfs</div>
+		</section>
+		<footer id="footConts">
+			<div class="adress">
+				
+			</div>
+			<div class="addLogo">
+				
+			</div>
+		</footer> -->
+	</section>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</head>
+<body>
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1>
+                                   <a href="cmong"><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></a>
+                                </h1>
+							</div>
+							<div class="sch">
+								<form>
+									<input type="text" name="" placeholder="검색어를 입력해 주세요">
+									<p><img src="../images/common/search_ico.png" alt="크몽메인검색아이콘"></p>
+								</form>
+							</div>
+						</li>
+						<li>
+                            <div class="utill">
+                                <% if(c_user){ %>
+                                 <!-- 로그인 성공시 -->
+                                    <!--<div class="mypg"><img src="../images/common/alram.png" alt=""></div>-->
+                                    <div class="boxing">
+                                        <div class="userImg"><img src="<%= c_user.c_id %>/<%= c_user.c_img %>" alt=""></div>
+                                        <div class="userId"><%= c_user.c_id %></div>
+                                        <span class="ico"></span>
+                                        <div class="utillConts">	
+                                            <ul>
+                                                <li><a href="userpage">구매목록</a></li>
+                                                <li><a href="productStep">판매</a></li>
+                                                <li><a href="sellerpage">판매목록</a></li>
+                                                <li><a href="likepage">찜목록</a></li>
+                                                <li><a href="mypage">나의정보</a></li>
+                                                <li><a href="logout">로그아웃</a></li>
+                                            </ul>
+                                        </div>
+                                        <img class="toparrow" src="../images/common/main_toparrow.png" alt="">
+                                    </div>
+                                 <% } else { %>
+                                    <!-- 비회원 -->
+                                    <div class="login">
+                                       <h2><a href='login'>로그인</a></h2>
+                                    </div>
+                                    <div class="aplyLogin">
+                                        <h2><a href='loginForm'>무료회원 가입</a></h2>
+                                    </div> 
+                                 <% } %>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</div>
+			<div class="utileHead addType">
+				<div>
+					<nav class="navi">
+						<ul class="firstUi">
+                            <li>
+                                <a href="type_list?category=1"><h2>디자인</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=11">로고 디자인</a></li>
+                                        <li><a href="type_list?category=12">명함&인쇄물</a></li>
+                                        <li><a href="type_list?category=13">웹&모바일</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="type_list?category=2"><h2>IT & 프로그래밍</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=21">워드프레스</a></li>
+                                        <li><a href="type_list?category=22">웹사이트 개발</a></li>
+                                        <li><a href="type_list?category=23">웹사이트 유지보수</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=""><h2>컨텐츠 제작</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>마케팅</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>번역 & 통역</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>문서작성</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                        </ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<section id="infoConts">
+			<div class="inerContens userPage" style="width:1270px !important">
+				<h2>구매</h2>
+				<div class="userBoxing">
+					<div class="boxOne">
+						<div class="buyer">
+							<div class="CompanyImg">
+                                <p><img src="<%= c_user.c_id %>/<%= c_user.c_img %>" alt=""></p>
+								<img class="gradeLogo" src="../images/common/kmong_grade_PRO.png" alt="">
+							</div>
+							<h4 class="seller"><%= c_user.c_id %></h4>
+							<p class="cashTxt">크몽캐시</p>
+							<p class="cash"><%= c_user.c_cash %> 원</p>
+							<p class="cashMoney">
+								<a href="chargepage" class="buyBtn">
+									<span>충전하기</span>
+								</a>
+							</p>
+						</div>
+						<div class="saveCash">
+							<ul>
+								<li class="txt">적립캐시</li>
+								<li class="money"><%= c_user.c_saving %> 원</li>
+							</ul>
+						</div>
+						<div class="menuList">
+							<ul>
+								<li class="line">
+									<a href="">
+										<img src="../images/sub/buying_active.png" alt="구매관리">
+										<p class="menuTex">구매관리</p>
+									</a>
+								</li>
+								<li>
+									<a href="">
+										<img src="../images/sub/payment_active.png" alt="결제내역">
+										<p class="menuTex">결제내역</p>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="boxTwo">
+						<h3>판매관리</h3>
+						<div class="listView">
+							<ul>
+                                <li class="colW">구매 횟수</li>
+								<li class="colW">판매자</li>
+                                <li class="colW">구매 고객</li>
+								<li>판매물품번호</li>
+								<li>구입물품 제목</li>
+								<li>구입물품 카테고리</li>
+                                <li>구입물품 세부항목</li>
+                                <li class="colW">구입수량</li>
+                                <li class="colW">구입금액</li>
+                                <li class="colW">구입 날자</li>
+							</ul>
+                            <% userSell.forEach(function(list,index){ %>
+                            <ul class="view">
+                                <li class="colW"><%= index+1 %></li>
+								<li class="colW"><%= list.sell_user %></li>
+                                <li class="colW"><%= list.buy_user %></li>
+								<li><%= list.de_idx %></li>
+								<li><%= list.de_tit %></li>
+								<li><%= list.de_cate_01 %></li>
+                                <li><%= list.de_subtit %></li>
+                                <li class="colW"><%= list.b_payCount %></li>
+                                <li class="colW"><%= list.b_payTotal %></li>
+                                <li class="colW"><%= list.b_date %></li>
+							</ul>
+                            <% })%>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="infoLink">
+				<div class="linkList">
+					<ul>
+						<li>크몽팀</li>
+						<li>|</li>
+						<li>서비스소개</li>
+						<li>|</li>
+						<li>인재채용</li>
+						<li>|</li>
+						<li>이용약관</li>
+						<li>|</li>
+						<li>개인정보취급방침</li>
+						<li>|</li>
+						<li>FAQ</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="footImg">
+			<img src="../images/common/footer.jpg" alt="">
+		</section>
+		<!-- <section id="notiConts">
+			<div>
+				<div class="notiFirst">
+					
+				</div>
+				<div class="notiLast">
+					
+				</div>
+			</div>
+			<div class="notiIg">sfsdfs</div>
+		</section>
+		<footer id="footConts">
+			<div class="adress">
+				
+			</div>
+			<div class="addLogo">
+				
+			</div>
+		</footer> -->
+	</section>
+</body>
+</html>

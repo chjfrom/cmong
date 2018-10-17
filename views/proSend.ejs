@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	<script>
+       $(function(){
+           
+       });
+        
+        var socket;
+        function connect(){
+            var host = $("#hostInput").val();
+            var port = $("#portInput").val();
+            connectToServer(host,port);
+        }
+        
+        function connectToServer(host,port) {
+            var url = 'http://'+ host +':' + port;
+            var options = {
+                forceNew : true
+            }
+            socket = io.connect(url,options);
+            socket.on('connect',function(){
+               println('웹소켓 서버에 연결됨-->' + url)
+            })
+            socket.on('disconnect',function(){
+                println('웹소켓 연결 종료됨');
+            })
+            
+            socket.on('message',function(message){
+                println('수신->' + JSON.stringify(message));
+            })
+            
+            socket.on('response',function(input){
+                println('응답->' + JSON.stringify(input));
+            })
+        }
+        
+        function login(){
+            var id = $("#idInput").val();
+            var password = $("#passwordInput").val();
+            var alias = $("#aliasInput").val();
+            var today = $("#todayInput").val();
+            
+            var output = {
+                id : id,
+                password:password,
+                alias : alias,
+                today : today
+            };
+            socket.emit('login',output);
+        }
+        
+        function send(){
+            var sender = $("#senderInput").val();
+            var recepient = $("#recepientInput").val();
+            var data = $("#dataInput").val();
+            
+            var message = {
+                sender : sender,
+                recepient : recepient,
+                command : 'chat',
+                type : 'text',
+                data : data
+            }
+            socket.emit('message',message);
+        }
+        
+        function println(data) {
+            console.log(data)
+            $("#results").append('<p>'+data+'</p>')
+        }
+        
+    </script>
+</head>
+<body>
+    
+    <div>
+        <h5>서버 연결</h5>
+        <input type="text" id="hostInput" value="localhost" >
+        <input type="text" id="portInput" value="3000" >
+        <input type="button" id="connectionButton" value="연결하기" onclick="connect()">
+        <br/>
+        
+        <h5>로그인</h5>
+        <input type="text" id="idInput" value="test01" >
+        <input type="pssword" id="passwordInput" value="123456" >
+        <input type="text" id="aliasInput" value="소녀시대" >
+        <input type="text" id="todayInput" value="좋은날" >
+        
+        <input type="button" id="loginButton" value="로그인" onclick="login()">
+        <input type="button" id="logoutButton" value="로그아웃" onclick="logout()">
+        <br/>
+        
+        
+        <div>
+            <div>
+                <span>보내는사람 : </span>
+                <input type="text" id="senderInput" value="test01" >
+            </div>
+            <div>
+                <span>받는사람 : </span>
+                <input type="text" id="recepientInput" value="ALL" >
+            </div>
+            <div>
+                <span>전송할 데이터 : </span>
+                <input type="text" id="dataInput" value="안녕!" >
+            </div>
+            <br>
+            <input type="button" id="sendButton" value="전송" onclick="send()">
+        </div>
+        
+        <p>결과</p>
+        <div id="results"></div>
+        
+    </div>
+    
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></h1>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<section id="infoConts">
+			<div class="sendBoxing">
+				<div class="proInfo">
+					<p class="proImg"><img src="../images/db/ad.jpg" alt=""></p>
+					<div class="proId">
+						<h2>dedi</h2>
+						<p>평균 응답시간 : 1시간 내외</p>
+					</div>
+				</div>
+				<div class="chatViews">
+					<div class="userSendBox">
+						<p>유저 :<span>(10:00)</span></p>
+						안녕하세요
+					</div>
+					<div class="proSendBox">
+						<p>판매자 :<span>(10:00)</span></p>
+						안녕하세요
+					</div>
+					<div class="userSendBox">
+						<p>유저 :<span>(10:00)</span></p>
+						잘되고 있는 건가요?
+					</div>
+					<div class="userSendBox">
+						<p>유저 :<span>(10:00)</span></p>
+						잘되고 있는 건가요?
+					</div>
+					<div class="userSendBox">
+						<p>유저 :<span>(10:00)</span></p>
+						잘되고 있는 건가요?
+					</div>
+					<div class="userSendBox">
+						<p>유저 :<span>(10:00)</span></p>
+						잘되고 있는 건가요?
+					</div>
+					<div class="userSendBox">
+						<p>유저 :<span>(10:00)</span></p>
+						잘되고 있는 건가요?
+					</div>
+				</div>
+				<div class="proSend">
+					<div class="info">
+						<div>
+							<p class="name">상대방 닉네임</p>
+							<p class="n">dedi</p>
+						</div>
+						<div class="d">
+							<p class="name">평균응답시간</p>
+							<p class="n">1시간 내외</p>
+						</div>
+						<div>
+							<p class="name">연락가능시간</p>
+							<p class="n">0 ~ 0시</p>
+						</div>
+					</div>
+					<div class="send">
+						<textarea name="" id="" cols="30" rows="10"></textarea>
+					</div>
+					<div>
+						<a href="" class="buyBtn">
+							<span>전송</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="infoLink">
+				<div class="linkList">
+					<ul>
+						<li>크몽팀</li>
+						<li>|</li>
+						<li>서비스소개</li>
+						<li>|</li>
+						<li>인재채용</li>
+						<li>|</li>
+						<li>이용약관</li>
+						<li>|</li>
+						<li>개인정보취급방침</li>
+						<li>|</li>
+						<li>FAQ</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="footImg">
+			<img src="../images/common/footer.jpg" alt="">
+		</section>
+	</section>
+</body>
+</html>

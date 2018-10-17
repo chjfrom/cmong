@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+    <Script>
+        $(function(){
+            var totalMoney = $(".liveMoney").text();
+            var realCount= $(".realCount").text();
+            var real = totalMoney * realCount;
+            $(".liveMoney").text(real)
+            $(".liveMoney1").text(real)
+            $(".liveSavingM").text(Math.ceil((totalMoney*realCount)*0.03));
+            /* 크몽 결제금액 count변경*/
+            
+            $(".plusM1").click(function(){
+                realCount = ++realCount;
+                $(".liveMoney").text(totalMoney*realCount);
+                $(".liveMoney1").text(totalMoney*realCount);
+                $(".countM").text(realCount)
+                $(".liveSavingM").text(Math.ceil((totalMoney*realCount)*0.03));
+
+            });
+            
+            $(".minusM").click(function(){
+                realCount = --realCount;
+                if (realCount <= 0){
+                    realCount = 1;
+                    $(".countM").text(realCount)
+                } else {
+                    var money = $(".totalMoney").text();
+                    $(".liveMoney").text(totalMoney*realCount);  
+                    $(".liveMoney1").text(totalMoney*realCount);
+                    $(".countM").text(realCount)
+                    $(".liveSavingM").text(Math.ceil((totalMoney*realCount)*0.03));
+                } 
+            });
+            
+            var cashSaving =0;
+            $(".cashBtn").click(function(){
+                cashSaving = $("#cashSaving").val();
+                $(".liveMoney1").text((totalMoney*realCount)-cashSaving);  
+            }); 
+            
+            $(".buyBtn").click(function(){
+                var finalMoney = $(".finalMoney").text();
+                var liveSavingM = $(".liveSavingM").text();
+                var SavingM = $(".SavingMM").text();
+                var cashM = $(".cashM").text();
+                var countM = $(".countM").text();
+                var url = "payment?finalMoney="+finalMoney+"&liveSavingM="+liveSavingM+"&cashSaving="+cashSaving
+                +"&c="+<%= resultc.c_idx %>+"&d="+<%= resultd.de_idx %>+"&cashM="+cashM+"&SavingM="+SavingM+"&countM="+countM;
+                $(location).attr('href',url);
+            })
+            
+        })
+    </Script>
+</head>
+<body>
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1>
+                                   <a href="cmong"><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></a>
+                                </h1>
+							</div>
+						</li>
+                        <li>
+                            <div class="utill">
+                                <% if(c_user){ %>
+                                 <!-- 로그인 성공시 -->
+                                    <!--<div class="mypg"><img src="../images/common/alram.png" alt=""></div>-->
+                                    <div class="boxing">
+                                        <div class="userImg"><img src="<%= c_user.c_id %>/<%= c_user.c_img %>" alt=""></div>
+                                        <div class="userId"><%= c_user.c_id %></div>
+                                        <span class="ico"></span>
+                                        <div class="utillConts">	
+                                            <ul>
+                                                <li><a href="userpage">구매목록</a></li>
+                                                <li><a href="productStep">판매</a></li>
+                                                <li><a href="sellerpage">판매목록</a></li>
+                                                <li><a href="likepage">찜목록</a></li>
+                                                <li><a href="mypage">나의정보</a></li>
+                                                <li><a href="logout">로그아웃</a></li>
+                                            </ul>
+                                        </div>
+                                        <img class="toparrow" src="../images/common/main_toparrow.png" alt="">
+                                    </div>
+                                 <% } else { %>
+                                    <!-- 비회원 -->
+                                    <div class="login">
+                                       <h2><a href='login'>로그인</a></h2>
+                                    </div>
+                                    <div class="aplyLogin">
+                                        <h2><a href='loginForm'>무료회원 가입</a></h2>
+                                    </div> 
+                                 <% } %>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<section id="infoConts">
+			<div class="paymentBox">
+				<h2>주문하기</h2>
+				<div class="paymentOpt">
+					<div class="optTit">
+						<img src="<%= resultd.c_id %>/<%= resultd.de_main_img %>" alt="주문로고">
+						<div class="sellerImg">
+							<h3><%= resultd.de_subtit %></h3>
+							<div>
+								<img class="selLogo" src="<%= resultc.c_id %>/<%= resultc.c_img %>" alt="판매잘">
+								<span><%= resultd.c_id %></span>
+							</div>
+						</div>
+					</div>
+					<div class="optCount">
+						<ul class="tit">
+							<li class="f">기본항목</li>
+							<li class="m1">수량선택</li>
+							<li class="m2">작업일</li>
+							<li class="l">가격</li>
+						</ul>
+						<div class="payBuyInfo">
+							<div class="lyaout">
+								<div class="buyBox">
+									<h5><%= resultd.de_subtit %></h5>
+									<p><%= resultd.de_subtex %></p>
+									<ul class="svcList">
+                                        <% if (resultd.de_step_01 == 'on') { %>
+                                            <li>원본파일 제공</li>
+                                        <% } %>
+                                        <% if (resultd) { %>
+                                            <li>페이지 수 : <%= resultd.de_step_02 %> 페이지</li>
+                                        <% } %>
+                                    </ul>
+                                    <div class="svcDetail">
+                                        <ul>
+                                            <li>작업일 : <%= resultd.de_step_03 %>일</li>
+                                            <li>수정 횟수 : <%= resultd.de_step_04 %> 회</li>
+                                        </ul>
+                                    </div>
+								</div>
+							</div>
+							<div class="lyaout">
+								<div class="countMoney">
+									<p class="minusM"><img src="../images/sub/ico_minus.jpg" alt=""></p>
+									<p class="realCount countM"><%= count %></p>
+									<p class="plusM1"><img src="../images/sub/ico_plus.jpg" alt=""></p>
+									<p class="day"><%= resultd.de_step_03 %>일</p>
+									<p>₩ <span class="liveMoney"><%= resultd.de_pay %></span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="paymentM">
+						<h3>결제금액</h3>
+						<div class="paymentInfo">
+							<ul>
+								<li class="ifno">
+									<div class="svc">
+										<p>총 서비스 금액</p>
+										<p>\ <span class="liveMoney1">130,000</span></p>
+									</div>
+									<div class="svc">
+										<p class="f">ㄴ 적립 예정 캐시</p>
+                                        <p class="f">\ <span class="liveSavingM">2,600</span></p>
+									</div>
+									<p class="useCash"><strong>보유 캐시</strong><span>(보유 캐시 : <span class="cashM"><%= c_user.c_cash %></span> 원)</span></p>
+                                    <p class="useCash"><strong>보유 적립금</strong><span>(보유 크몽적립금 : <span class="SavingMM"><%= c_user.c_saving %></span> 원)</span></p>
+									<div class="useCount">
+										<ul>
+											<li><input id="cashSaving" type="text" name="cashSaving" ></li>
+											<li><a class="cashBtn">캐시 사용</a></li>
+										</ul>
+									</div>
+								</li>
+								<li class="ifno">
+									<div class="total">
+										<h4>총 결제금액 <span>(VAT 포함)</span></h4>
+									</div>
+									<div class="totalPay">
+										<p>\ <span class="liveMoney1 finalMoney">130,000</span></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="btnTotalPay">
+					<p class="buyBtn">
+						<span>결제하기</span>
+					</p>
+				</div>
+			</div>
+			<div class="infoLink">
+				<div class="linkList">
+					<ul>
+						<li>크몽팀</li>
+						<li>|</li>
+						<li>서비스소개</li>
+						<li>|</li>
+						<li>인재채용</li>
+						<li>|</li>
+						<li>이용약관</li>
+						<li>|</li>
+						<li>개인정보취급방침</li>
+						<li>|</li>
+						<li>FAQ</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="footImg">
+			<img src="../images/common/footer.jpg" alt="">
+		</section>
+	</section>
+</body>
+</html>

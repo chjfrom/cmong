@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
+    <script>   
+        $(function(){
+            var arry
+            var listText;
+            $(".titList .list li").click(function(){
+                listText = $(this).text();
+                clickP();
+            });
+            var check;
+            $(".check input").click(function(){
+                check = $(".check input:checked");
+                clickP();
+            })
+            var cate01 = $(".subTxt01").text();
+            function  clickP(){     
+                if (listText !== undefined && check !== undefined){
+                     var totalResult = {
+                        listText : listText,
+                        check : check
+                    }
+                    typeListAll(totalResult);
+                } else if (listText !== undefined){
+                    typeList(listText);
+                } else if (check !== undefined){
+                     var totalResult = {
+                        cate01 : cate01,
+                        check : check
+                    }
+                    typeListC(totalResult);
+                } 
+            }
+            
+            var size = $(".likeN").length;
+            var productSize = $(".productN").length;
+            for(var i=0; i<size; i++){
+                var likeN = $(".likeN").eq(i).text();
+                for(var k=0; k<productSize; k++){
+                    var productN = $(".productN").eq(k).text();
+                    var productPoint = $(".productN").eq(k).prev().prev().prev().children().first();
+                    if (likeN === productN){
+                       $(productPoint).addClass("onStar")
+                    } 
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1>
+                                   <a href="cmong"><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></a>
+                                </h1>
+							</div>
+							<div class="sch">
+								<form>
+									<input type="text" name="" placeholder="검색어를 입력해 주세요">
+									<p><img src="../images/common/search_ico.png" alt="크몽메인검색아이콘"></p>
+								</form>
+							</div>
+						</li>
+						<li>
+                            <div class="utill">
+                                <% if(c_user){ %>
+                                 <!-- 로그인 성공시 -->
+                                    <!--<div class="mypg"><img src="../images/common/alram.png" alt=""></div>-->
+                                    <div class="boxing">
+                                        <div class="userImg"><img src="<%= c_user.c_id %>/<%= c_user.c_img %>" alt=""></div>
+                                        <div class="userId"><%= c_user.c_id %></div>
+                                        <span class="ico"></span>
+                                        <div class="utillConts">	
+                                            <ul>
+                                                <li><a href="userpage">구매목록</a></li>
+                                                <li><a href="productStep">판매</a></li>
+                                                <li><a href="sellerpage">판매목록</a></li>
+                                                <li><a href="likepage">찜목록</a></li>
+                                                <li><a href="mypage">나의정보</a></li>
+                                                <li><a href="logout">로그아웃</a></li>
+                                            </ul>
+                                        </div>
+                                        <img class="toparrow" src="../images/common/main_toparrow.png" alt="">
+                                    </div>
+                                 <% } else { %>
+                                    <!-- 비회원 -->
+                                    <div class="login">
+                                       <h2><a href='login'>로그인</a></h2>
+                                    </div>
+                                    <div class="aplyLogin">
+                                        <h2><a href='loginForm'>무료회원 가입</a></h2>
+                                    </div> 
+                                 <% } %>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</div>
+			<div class="utileHead addType">
+				<div>
+					<nav class="navi">
+						<ul class="firstUi">
+                            <li>
+                                <a href="type_list?category=1"><h2>디자인</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=11">로고 디자인</a></li>
+                                        <li><a href="type_list?category=12">명함&인쇄물</a></li>
+                                        <li><a href="type_list?category=13">웹&모바일</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="type_list?category=2"><h2>IT & 프로그래밍</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=21">워드프레스</a></li>
+                                        <li><a href="type_list?category=22">웹사이트 개발</a></li>
+                                        <li><a href="type_list?category=23">웹사이트 유지보수</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=""><h2>컨텐츠 제작</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>마케팅</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>번역 & 통역</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>문서작성</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                        </ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<section id="infoConts">
+			<div class="inerContens">
+				<div class="infoBoxing">
+					<div class="leftBaner">
+						<div><h1 class="subTxt01"><%= typeName %></h1></div>
+						<div><strong class="cate">카테고리</strong></div>
+						<div class="titList">
+							<div class="icoTiele">
+								<img src="../images/common/ic-arrow-right.png" alt="">
+								<h2 class="subTxt02"><%= typeName %></h2>
+							</div>  
+                            <% if (category == 1){ %>
+                                <ul class="list">
+                                    <li>로고디자인</li>
+                                    <li>명함&인쇄물</li>
+                                    <li>웹&모바일</li>
+                                </ul>
+                            <% } else if(category == 11) { %>
+                                <ul class="list">
+                                    <li>로고디자인</li>
+                                    <li>명함&인쇄물</li>
+                                    <li>웹&모바일</li>
+                                </ul>
+                            <% } else { %>
+                                 <ul class="list">
+                                    <li>워드프레스</li>
+                                    <li>웹사이트 개발</li>
+                                    <li>웹사이트 유지보수</li>
+                                </ul>
+                            <% } %>
+							<div class="expert">
+								<h3>전문가등급</h3>
+								<div class="check">
+									<p>
+										<input class="checkInput" type="checkbox" value="0" id="new">
+										<span class="modifyCheck"></span>
+										<span class="modifyChecked"></span>
+									</p>
+									<p>
+										<label for="new">NEW</label>
+									</p>
+								</div>
+								<div class="check">
+									<p>
+										<input class="checkInput" type="checkbox" value="1" id="JUNIOR">
+										<span class="modifyCheck"></span>
+										<span class="modifyChecked"></span>
+									</p>
+									<p>
+										<label for="new">JUNIOR</label>
+									</p>
+								</div>
+								<div class="check">
+									<p>
+										<input class="checkInput" type="checkbox" value="2" id="SENIOR">
+										<span class="modifyCheck"></span>
+										<span class="modifyChecked"></span>
+									</p>
+									<p>
+										<label for="new">SENIOR</label>
+									</p>
+								</div>
+								<div class="check">
+									<p>
+										<input class="checkInput" type="checkbox" value="3" id="SEMIPRO">
+										<span class="modifyCheck"></span>
+										<span class="modifyChecked"></span>
+									</p>
+									<p>
+										<label for="new">SEMIPRO</label>
+									</p>
+								</div>
+								<div class="check">
+									<p>
+										<input class="checkInput" type="checkbox" value="4" id="PRO">
+										<span class="modifyCheck"></span>
+										<span class="modifyChecked"></span>
+									</p>
+									<p>
+										<label for="new">PRO</label>
+									</p>
+								</div>
+								<div class="check">
+									<p>
+										<input class="checkInput" type="checkbox" value="5" id="MASTER">
+										<span class="modifyCheck"></span>
+										<span class="modifyChecked"></span>
+									</p>
+									<p>
+										<label for="new">MASTER</label>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="infoList subInfoList">
+						<div class="productList">
+							<div class="selectCh">
+								<select>
+									<option>추천순</option>
+									<option>랭킹순</option>
+									<option>신규등록순</option>
+								</select>
+								<span class="ico"></span>
+							</div>
+							<div class="list">
+								<ul class="dbSelerList">
+                                    <% cmong_product.forEach(function(list){ %>
+                                    <li>
+                                        <a href="product_list_view?c=<%= list.c_idx %>&d=<%= list.de_idx %>">
+                                            <img src="<%= list.c_id %>/<%= list.de_main_img %>" alt="">
+                                            <p class="productTex"><%= list.de_tit %></p>
+                                        </a>
+                                        <div class="procuctPay">
+                                            <p class=""></p>
+                                            <p>₩ <%= list.de_pay %></p> 
+                                        </div>
+                                        <div class="star">
+                                            <p class="user"><%= list.c_id %></p>
+                                            <p class="starNum">******</p>
+                                        </div>
+                                        <input type="hidden" id="inteD_idx" value="<%= list.de_idx %>">
+                                        <div class="productN"><%= list.de_idx %></div>
+                                    </li>
+                                    <% })%>
+								</ul>
+                                <% c_interest.forEach(function(like){ %>
+                                    <div class="likeN"><%= like.de_idx %></div>
+                                <% })%>
+                                <ul class="ajaxSelerList">
+                                    
+                                </ul>
+                                <input type="hidden" id="inteU_idx" value="<%= c_user.c_idx %>">
+                                <input type="hidden" id="inteU_id" value="<%= c_user.c_id %>">
+							</div>
+							<div class="paging">
+								<ul>
+									<li class="before"><span><a href="">«</a></span></li>
+									<li><a href="">1</a></li>
+									<li><a href="">2</a></li>
+									<li><a href="">3</a></li>
+									<li><a href="">4</a></li>
+									<li><a href="">5</a></li>
+									<li><a href="">6</a></li>
+									<li><a href="">7</a></li>
+									<li><a href="">8</a></li>
+									<li><a href="">9</a></li>
+									<li class="after"><span><a href="">»</a></span></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="infoLink">
+				<div class="linkList">
+					<ul>
+						<li>크몽팀</li>
+						<li>|</li>
+						<li>서비스소개</li>
+						<li>|</li>
+						<li>인재채용</li>
+						<li>|</li>
+						<li>이용약관</li>
+						<li>|</li>
+						<li>개인정보취급방침</li>
+						<li>|</li>
+						<li>FAQ</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="footImg">
+			<img src="../images/common/footer.jpg" alt="">
+		</section>
+		<!-- <section id="notiConts">
+			<div>
+				<div class="notiFirst">
+					
+				</div>
+				<div class="notiLast">
+					
+				</div>
+			</div>
+			<div class="notiIg">sfsdfs</div>
+		</section>
+		<footer id="footConts">
+			<div class="adress">
+				
+			</div>
+			<div class="addLogo">
+				
+			</div>
+		</footer> -->
+	</section>
+</body>
+</html>

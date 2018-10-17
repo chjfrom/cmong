@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
+    <script type="text/javascript" src="../js/sub.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#u_id').keyup(function(event) {
+                loginIdCheck();
+            });  
+            $(".loginBtn span").click(function(){
+                loginValueCheck();
+            });
+        });
+    </script>
+</head>
+<body>
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1>
+                                   <a href="cmong"><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></a>
+                                </h1>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<div class="loginBoxing">
+            <form method="post" action="user_insert" id="f">
+                <h2>무료회원가입</h2>
+                <div class="inputLogin loginData">
+                    <p><input type="text" name="u_id" id="u_id" placeholder="아이디"></p>
+                    <p><input type="text" name="u_name" id="u_name" placeholder="이름"></p>
+                    <p><input type="password" name="u_pw" id="u_pw" placeholder="비밀번호"></p>
+                    <p><input type="password" name="u_pwC" id="u_pwC" placeholder="비밀번호 확인"></p>
+                    <p><input type="text" name="u_phon" id="u_phon" placeholder="핸드폰번호"></p>
+                    <p><input type="text" name="u_email" id="u_email" placeholder="이메일"></p>
+                    <div class="loginCId">
+                        <span class="ty1">중복된 아이디</span>
+                        <span class="ty2">중복안된 아이디</span>
+                    </div>
+                </div>
+            </form>
+			<div class="loginbox">
+				<div class="loginBtn">
+					<span>동의하고 가입완료</span>
+				</div>
+			</div>
+			<div class="copyright">
+				<p>Copyright © 2017 Kmong Inc. All rights reserved.</p>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

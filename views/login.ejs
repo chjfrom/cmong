@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".loginBtn span").click(function(){
+               $("#f").submit();
+            });
+        });
+    </script>
+</head>
+<body>
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1><a href="login"><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></a></h1>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<div class="loginBoxing">
+			<h2>로그인</h2>
+			<div class="inputLogin">
+                <form method="post" action="login" id="f">
+                    <p class="email"><input type="text" name="u_id" placeholder="아이디"></p>
+                    <p><input type="password" name="u_pw" placeholder="비밀번호"></p>
+                    <div class="check loginCheck">
+                        <p>
+                            <input class="checkInput" type="checkbox" name="" id="new">
+                            <span class="modifyCheck"></span>
+                            <span class="modifyChecked"></span>
+                        </p>
+                        <p>
+                            <label for="new">로그인 기억하기</label>
+                        </p>
+                    </div>
+                </form>
+			</div>
+			<div class="loginbox">
+				<div class="loginBtn">
+					<span>로그인</span>
+				</div>
+				<div class="loginType">
+					<ul>
+						<!--<li>아이디/비밀번호 찾기</li>-->
+                        <li><a href="loginForm">무료회원가입</a></li>
+					</ul>
+				</div>
+			</div>
+		<!--	<div class="anotherLogin">
+				<div class="anobtn">
+                    <span><a href="">페이스북으로 시작</a></span>
+				</div>
+			</div>-->
+			<div class="copyright">
+				<p>Copyright © 2017 Kmong Inc. All rights reserved.</p>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

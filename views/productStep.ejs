@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>크몽프로젝트 메인화면</title>
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css">
+	<link rel="stylesheet" type="text/css" href="../css/sub.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+    <link rel="stylesheet" href="../basic.css" />
+	<link rel="stylesheet" href="../dropzone.css" />
+	<script type="text/javascript" src="../dropzone.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){ 
+            $("#fBtnActiuon").click(function(){
+              $("#f").submit(); 
+            });
+            $(".test").click(function(){
+                var jpg = $("#JPGCheck").val();
+                
+            })
+            
+        });
+        Dropzone.options.oneImg = {
+            paramName: "userfile",
+            dictRemoveFile:"del",
+            addRemoveLinks: true,
+
+            autoProcessQueue: false,
+
+            dictDefaultMessage:"한장의 이미지 등록",
+            accept: function(file, done) {
+                console.log("uploaded");
+                done();
+            },
+            init: function() {
+                this.on("processing", function(file) {
+                    var userFolderN = $("#userFolderN").val();
+                    this.options.url = "/uploadMain/"+userFolderN;
+                    $("#imgMain").attr("value",file.upload.filename)
+                });
+                var oneUpload = document.querySelector("#oneUpload");
+                oneImg = this;
+                oneUpload.addEventListener("click", function () {
+                     var userFolderN = $("#userFolderN").val();
+                $("#oneImg").attr('action','uploadMain/'+userFolderN);
+                    oneImg.processQueue();
+                });
+                this.on("addedfile", function() {
+                    if (this.files[1]!=null){
+                        this.removeFile(this.files[0]);
+                    }
+                });
+            }
+        };
+        Dropzone.options.multiImg1 = {
+            paramName: "userfile",
+            dictRemoveFile:"del",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            dictDefaultMessage:"세장의 이미지 등록",
+            accept: function(file, done) {
+                console.log("uploaded");
+                done();
+            },
+            init: function() { 
+                this.on("processing", function(file) {
+                    var userFolderN = $("#userFolderN").val();
+                    this.options.url = "/uploadSub/"+userFolderN;
+                    $(".imgSub1").attr("value",file.upload.filename)
+                });
+                var multiUpload = document.querySelector("#multiUpload");
+                    multiImg = this;
+                    multiUpload.addEventListener("click", function () {
+                    multiImg.processQueue();
+                });
+                this.on("addedfile", function() {
+                  if (this.files[1]!=null){
+                      this.removeFile(this.files[0]);
+                  }
+                });
+            }
+        };
+        Dropzone.options.multiImg2 = {
+            paramName: "userfile",
+            dictRemoveFile:"del",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            dictDefaultMessage:"세장의 이미지 등록",
+            accept: function(file, done) {
+                console.log("uploaded");
+                done();
+            },
+            init: function() { 
+                this.on("processing", function(file) {
+                    var userFolderN = $("#userFolderN").val();
+                    this.options.url = "/uploadSub/"+userFolderN;
+                    $(".imgSub2").attr("value",file.upload.filename)
+                });
+                var multiUpload = document.querySelector("#multiUpload");
+                    multiImg2 = this;
+                    multiUpload.addEventListener("click", function () {
+                    multiImg2.processQueue();
+                });
+                this.on("addedfile", function() {
+                  if (this.files[1]!=null){
+                      this.removeFile(this.files[0]);
+                  }
+                });
+            }
+        };
+        Dropzone.options.multiImg3 = {
+            paramName: "userfile",
+            dictRemoveFile:"del",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            dictDefaultMessage:"세장의 이미지 등록",
+            accept: function(file, done) {
+                console.log("uploaded");
+                done();
+            },
+            init: function() { 
+                this.on("processing", function(file) {
+                    var userFolderN = $("#userFolderN").val();
+                    this.options.url = "/uploadSub/"+userFolderN;
+                    $(".imgSub3").attr("value",file.upload.filename)
+                });
+                var multiUpload = document.querySelector("#multiUpload");
+                    multiImg3 = this;
+                    multiUpload.addEventListener("click", function () {
+                    multiImg3.processQueue();
+                });
+                this.on("addedfile", function() {
+                  if (this.files[1]!=null){
+                      this.removeFile(this.files[0]);
+                  }
+                });
+            }
+        };
+	  </script>
+</head>
+<body>
+	<section id="cmong">
+		<header id="headConts">
+			<div class="utileHead">
+				<div>
+					<ul class="topUtill">
+						<li>
+							<div class="logo">
+								<h1>
+                                   <a href="cmong"><img src="../images/common/kmong_logo.png" alt="크몽메인로고"></a>
+                                </h1>
+							</div>
+							<div class="sch">
+								<form>
+									<input type="text" name="" placeholder="검색어를 입력해 주세요">
+									<p><img src="../images/common/search_ico.png" alt="크몽메인검색아이콘"></p>
+								</form>
+							</div>
+						</li>
+						<li>
+                            <div class="utill">
+                                <% if(c_user){ %>
+                                 <!-- 로그인 성공시 -->
+                                    <!--<div class="mypg"><img src="../images/common/alram.png" alt=""></div>-->
+                                    <div class="boxing">
+                                        <div class="userImg"><img src="<%= c_user.c_id %>/<%= c_user.c_img %>" alt=""></div>
+                                        <div class="userId"><%= c_user.c_id %></div>
+                                        <span class="ico"></span>
+                                        <div class="utillConts">	
+                                            <ul>
+                                                <li><a href="userpage">구매목록</a></li>
+                                                <li><a href="productStep">판매</a></li>
+                                                <li><a href="sellerpage">판매목록</a></li>
+                                                <li><a href="likepage">찜목록</a></li>
+                                                <li><a href="mypage">나의정보</a></li>
+                                                <li><a href="logout">로그아웃</a></li>
+                                            </ul>
+                                        </div>
+                                        <img class="toparrow" src="../images/common/main_toparrow.png" alt="">
+                                    </div>
+                                 <% } else { %>
+                                    <!-- 비회원 -->
+                                    <div class="login">
+                                       <h2><a href='login'>로그인</a></h2>
+                                    </div>
+                                    <div class="aplyLogin">
+                                        <h2><a href='loginForm'>무료회원 가입</a></h2>
+                                    </div> 
+                                 <% } %>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</div>
+			<div class="utileHead addType">
+				<div>
+					<nav class="navi">
+						<ul class="firstUi">
+                            <li>
+                                <a href="type_list?category=1"><h2>디자인</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=11">로고 디자인</a></li>
+                                        <li><a href="type_list?category=12">명함&인쇄물</a></li>
+                                        <li><a href="type_list?category=13">웹&모바일</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="type_list?category=2"><h2>IT & 프로그래밍</h2></a>
+                                <div class="navi_contens">
+                                    <ul class="lastUi">
+                                        <li><a href="type_list?category=21">워드프레스</a></li>
+                                        <li><a href="type_list?category=22">웹사이트 개발</a></li>
+                                        <li><a href="type_list?category=23">웹사이트 유지보수</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=""><h2>컨텐츠 제작</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>마케팅</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>번역 & 통역</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                            <li>
+                                <a href=""><h2>문서작성</h2></a>
+                                <div class="navi_contens"></div>
+                            </li>
+                        </ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+		<section id="infoConts">
+			<div class="inerContens">
+				<div class="productStep">
+                    <p class="ad"><img src="../images/sub/newmilege.jpg" alt=""></p>
+                    <form method="post" action="upload" id="f">
+                        <div class="step01">
+                            <div class="svcTitle">
+                                <dl class="stepLayout">
+                                    <dt>서비스 제목</dt>
+                                    <dd>
+                                        <div class="svcTex">
+                                            <input type="text" id="titInput" name="de_tit" value="" placeholder="예) 마음을 담아 재미있고 개성있는 캐리커쳐를 그려"> 
+                                            <span>드립니다.</span>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="svcCategory">
+                                <dl class="stepLayout">
+                                    <dt>카테고리</dt>
+                                    <dd>
+                                        <div class="category">
+                                            <ul>
+                                                <li>
+                                                    <div class="upCate">
+                                                        <p>상위카테고리</p>
+                                                        <div class="selectCh">
+                                                            <select name="de_cate_01" id="upSelect">
+                                                                <option>선택해주세요</option>
+                                                                <option value="디자인">디자인</option>
+                                                                <option value="IT&프로그래밍">IT&프로그래밍</option>
+                                                            </select>
+                                                            <span class="ico"></span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="downCate">
+                                                        <p>하위카테고리</p>
+                                                        <div class="selectCh">
+                                                            <select name="" id="designSch">
+                                                                <option>선택해주세요</option>
+                                                                <option value="로고디자인">로고디자인</option>
+                                                                <option value="명함&인쇄물">명함&인쇄물</option>
+                                                                <option value="웹&모바일">웹&모바일</option>
+                                                            </select>
+                                                            <select name="" id="itSch">
+                                                                <option>선택해주세요</option>
+                                                                <option value="워드프레스">워드프레스</option>
+                                                                <option value="웹사이트 개발">웹사이트 개발</option>
+                                                                <option value="웹사이트 유지보수">웹사이트 유지보수</option>
+                                                            </select>
+                                                            <span class="ico"></span>
+                                                        </div>
+                                                       <!-- <div class="selectCh itSch">
+                                                            <select name="" id="">
+                                                                <option>선택해주세요</option>
+                                                                <option value="11">워드프레스</option>
+                                                                <option value="22">웹사이트 개발</option>
+                                                                <option value="33">웹사이트 유지보수</option>
+                                                            </select>
+                                                            <span class="ico"></span>
+                                                        </div>-->
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="svcType designType">
+                                <dl class="stepLayout">
+                                    <dt>서비스 방식</dt>
+                                    <dd>
+                                        <div class="svcTypeList">
+                                            <div class="logotype">
+                                                로고타입
+                                                <span>+</span>
+                                            </div>
+                                            <div class="type">
+                                                <p>작업 가능한 로고타입은?</p>
+                                                <ul class="history deHistory">
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="JPGCheck">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="JPGCheck">JPG</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="PNG">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="new">PNG</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="PSD">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="PSD">PSD</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="PDF">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="PDF">PDF</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+
+                            <div class="svcType itType">
+                                <dl class="stepLayout">
+                                    <dt>서비스 방식</dt>
+                                    <dd>
+                                        <div class="svcTypeList">
+                                            <div class="logotype">
+                                                로고타입
+                                                <span>+</span>
+                                            </div>
+                                            <div class="type">
+                                                <p>작업 가능한 로고타입은?</p>
+                                                <ul class="history itHistory">
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="new">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="new">HTML</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="new">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="new">JSP</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="new">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="new">NODE JS</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="check">
+                                                            <p style="width:8%">
+                                                                <input class="checkInput" type="checkbox" name="" id="new">
+                                                                <span class="modifyCheck"></span>
+                                                                <span class="modifyChecked"></span>
+                                                                <input type="hidden" name="" class="checkRealTex">
+                                                            </p>
+                                                            <p>
+                                                                <label for="new">VIEW JS</label>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="loginBtn btnStep01">
+                                <span class="test">저장 및 다음단계</span>
+                            </div>
+                            <div class="imgInfoTEx">
+                                <img src="../images/sub/step01info.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="step02">
+                            <div class="tit">패키지(<span>예시</span>)</div>
+                            <div class="packTbl">
+                                <table>
+                                    <colgroup>
+                                        <col style="width:20%">
+                                        <col style="width:26%">
+                                        <col style="width:26%">
+                                        <col style="width:26%">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>STANDARD</th>
+                                            <th>DELUXE</th>
+                                            <th>PREMIUM</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th rowspan="2">설명</th>
+                                            <td>
+                                                <input type="text" name="de_subtit" placeholder="제목을 입력해주세요">
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="제목을 입력해주세요">
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="제목을 입력해주세요">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="de_subtex" placeholder="상세 설명을 입력해주세요">
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="상세 설명을 입력해주세요">
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="상세 설명을 입력해주세요">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>금액 (VAT 포함)</th>
+                                            <td>
+                                                <input type="text" name="de_pay" placeholder="최소 5,000">
+                                                <span class="won">원</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="최소 5,000">
+                                                <span class="won">원</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" placeholder="최소 5,000">
+                                                <span class="won">원</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>원본파일 제공</th>
+                                            <td>
+                                                <div class="check packTblCheck">
+                                                    <p>
+                                                        <input class="checkInput" type="checkbox" name="de_step_01" id="packTblCheck1">
+                                                        <span class="modifyCheck"></span>
+                                                        <span class="modifyChecked"></span>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="check packTblCheck">
+                                                    <p>
+                                                        <input class="checkInput" type="checkbox" name="chk" id="packTblCheck2">
+                                                        <span class="modifyCheck"></span>
+                                                        <span class="modifyChecked"></span>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="check packTblCheck">
+                                                    <p>
+                                                        <input class="checkInput" type="checkbox" name="chk" id="packTblCheck3">
+                                                        <span class="modifyCheck"></span>
+                                                        <span class="modifyChecked"></span>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>페이지수</th>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="de_step_02" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>수정횟수</th>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="de_step_03" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="" id="">
+                                                         <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>작업기간</th>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="de_step_04" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="selectCh">
+                                                    <select name="" id="">
+                                                        <option>선택해주세요</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="무제한">무제한</option>
+                                                    </select>
+                                                    <span class="ico"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="btnStep02">
+                                    <div class="loginBtn btnstp1">
+                                        <span>이전단계</span>
+                                    </div>
+                                    <div class="loginBtn btnstp2">
+                                        <span>저장 및 다음단계</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step03">
+                            <div class="svcAccount">
+                                <dl class="stepLayout">
+                                    <dt>서비스 설명</dt>
+                                    <dd>
+                                        <textarea class="textarea" name="de_detail_tex" id="" cols="30" rows="10"></textarea>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="as">
+                                <dl class="stepLayout">
+                                    <dt>A/S및 환불</dt>
+                                    <dd>
+                                        <textarea class="textarea" name="de_as" id="" cols="30" rows="10"></textarea>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="svcAccount proIntro">
+                                <dl class="stepLayout">
+                                    <dt>전문가 소개</dt>
+                                    <dd>
+                                        <textarea class="textarea" name="de_pro_intro" id="" cols="30" rows="10"></textarea>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="btnStep03">
+                                <div class="loginBtn btnstp1">
+                                    <span>이전단계</span>
+                                </div>
+                                <div class="loginBtn btnstp2">
+                                    <span>저장 및 다음단계</span>
+                                </div>
+                            </div>
+                        </div>
+                        <input id="uIdx" type="hidden" name="uIdx" value="<%= c_user.c_idx %>">
+                        <input id="uNAme" type="hidden" name="uNAme" value="<%= c_user.c_id %>">
+                        <input id="imgMain" type="hidden" name="imgMain" value="">
+                        <input class="imgSub1" type="hidden" name="imgSub1" value="">
+                        <input class="imgSub2" type="hidden" name="imgSub2" value="">
+                        <input class="imgSub3" type="hidden" name="imgSub3" value="">
+                    </form>
+                    <div class="step04">
+                        <div class="svcAccount">
+                            <dl class="stepLayout fileForm">
+                                <dt>메인 이미지 등록</dt>
+                                <dd class="aplyOimg">
+                                    <form id="oneImg" enctype="multipart/form-data" action="uploads" method="post" class="dropzone">
+                                    </form>
+                                    <div id="oneUpload"><p><span>서버 업로드</span></p></div>
+                                </dd>
+                            </dl>
+                            <dl class="stepLayout fileForm">
+                                <dt>상세 이미지 등록(3장)</dt>
+                                <dd class="aplyMimg">
+                                    <form id="multiImg1" enctype="multipart/form-data" action="uploads" method="post" class="dropzone">
+                                    </form>
+                                    <form id="multiImg2" enctype="multipart/form-data" action="uploads" method="post" class="dropzone">
+                                    </form>
+                                    <form id="multiImg3" enctype="multipart/form-data" action="uploads" method="post" class="dropzone">
+                                    </form>
+                                     <div id="multiUpload"><p><span>서버 업로드</span></p></div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="btnStep04">
+                            <div class="loginBtn btnstp1">
+                                <span>이전단계</span>
+                            </div>
+                            <div class="loginBtn btnstp2">
+                                <span id="fBtnActiuon">등록 완료</span>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+                <input id="userFolderN" type="hidden" name="userFolderN" value="<%= c_user.c_id %>">
+			</div>
+			<div class="infoLink">
+				<div class="linkList">
+					<ul>
+						<li>크몽팀</li>
+						<li>|</li>
+						<li>서비스소개</li>
+						<li>|</li>
+						<li>인재채용</li>
+						<li>|</li>
+						<li>이용약관</li>
+						<li>|</li>
+						<li>개인정보취급방침</li>
+						<li>|</li>
+						<li>FAQ</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="footImg">
+			<img src="../images/common/footer.jpg" alt="">
+		</section>
+		<!-- <section id="notiConts">
+			<div>
+				<div class="notiFirst">
+					
+				</div>
+				<div class="notiLast">
+					
+				</div>
+			</div>
+			<div class="notiIg">sfsdfs</div>
+		</section>
+		<footer id="footConts">
+			<div class="adress">
+				
+			</div>
+			<div class="addLogo">
+				
+			</div>
+		</footer> -->
+	</section>
+</body>
+</html>

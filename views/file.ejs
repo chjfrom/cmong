@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/basic.css" />
+	<link rel="stylesheet" href="/dropzone.css" />
+	<script type="text/javascript" src="/dropzone.js"></script>
+	<title>파일</title>
+     <script type="text/javascript">
+	    Dropzone.options.my = {
+	      paramName: "userfile", // The name that will be used to transfer the file
+	      maxFilesize: 1024, // MB
+             /* maxFiles: 3,*/
+           addRemoveLinks: true,
+            
+            
+            dictRemoveFile:"del",
+	      url: "upload",
+            init: function () {
+                var submitButton = document.querySelector("#submit-all")
+                
+                submitButton.addEventListener("click", function() {
+                  alert("클릭");
+                });
+                
+                /* this.on("maxfilesexceeded", function (data) {
+                    alert('최대 업로드 파일 수는 3개 입니다.');
+                });*/
+               /* this.on("maxfilesreached", function (data) {
+                    
+                    alert('222');
+                });
+                
+                
+                 this.on("removedfile", function (data) {
+                     alert("aaaa");
+                });*/ 
+            }
+	    };
+	  </script>
+</head>
+<body>
+	<form id="my" enctype="multipart/form-data" action="upload" method="post" class="dropzone">
+    <!--<form id="my" enctype="multipart/form-data" action="upload" method="post">-->
+	  <div class="fallback">
+	    <input name="userfile" type="file" />
+        <input name="" type="submit" />
+	  </div>
+	</form>
+    <button id="submit-all">Submit all files</button>
+    <div><input name="" type="submit" /></div>
+</body>
+</html>
