@@ -22,7 +22,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static('file'));
 app.use(express.static('public'));
-app.use(express.static('uploads'));
+app.use(express.static('loadUp'));
 app.use(session({
   secret: '3!@4&*$#%$#',
   resave: true,
@@ -32,7 +32,7 @@ var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     console.log("---------------")
     console.log(req.params.id)
-    cb(null, 'uploads/'+req.params.id)
+    cb(null, 'loadUp/'+req.params.id)
   },
   filename: function (req, file, cb) {
     console.log(file);
@@ -840,8 +840,8 @@ app.post('/user_insert',function(req,res){
                 console.log(err)
                 res.render('loginForm');
             } else {
-                fs.mkdir('./uploads/'+id, '0777', function(err){ if(err) throw err; console.log('dir writed'); });
-                fse.copy('./user_first_img.jpg','./uploads/'+id+'/user_first_img.jpg')
+                fs.mkdir('./loadUp/'+id, '0777', function(err){ if(err) throw err; console.log('dir writed'); });
+                fse.copy('./user_first_img.jpg','./loadUp/'+id+'/user_first_img.jpg')
                 .then(()=> console.log('sucess!'))
                 .catch(err => console.error(err))
                 res.render('login');
@@ -862,8 +862,8 @@ app.get('/chat',function(req,res){
 
 app.use(cors());
 
-var server = app.listen(3000, function(){
-  console.log('Connected, 3000 port!');
+var server = app.listen(80, function(){
+  console.log('Connected, 80 port!');
 })
 
 
