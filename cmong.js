@@ -12,8 +12,8 @@ var mysql = require('mysql');
 var conn = mysql.createConnection({
   host     : 'cmongdb.cyae1ptjai7y.ap-northeast-2.rds.amazonaws.com',
   user     : 'chjfrom',
-  password : '10021009',
-  database : 'cmong'
+  password : '',
+  database : ''
 });
 conn.connect();
 var app = express();
